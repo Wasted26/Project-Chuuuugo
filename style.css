@@ -1,0 +1,390 @@
+/* Reset y configuración general */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Arial', sans-serif;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    min-height: 100vh;
+    overflow-x: hidden;
+    position: relative;
+}
+
+/* Efecto de partículas en el fondo */
+body::before {
+    content: '';
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-image: 
+        radial-gradient(circle at 20% 20%, rgba(255,255,255,0.1) 1px, transparent 1px),
+        radial-gradient(circle at 80% 80%, rgba(255,255,255,0.1) 1px, transparent 1px),
+        radial-gradient(circle at 40% 60%, rgba(255,255,255,0.1) 1px, transparent 1px);
+    background-size: 50px 50px, 80px 80px, 60px 60px;
+    animation: sparkle 10s infinite linear;
+    pointer-events: none;
+    z-index: -1;
+}
+
+@keyframes sparkle {
+    0% { transform: translateX(0) translateY(0); }
+    100% { transform: translateX(-50px) translateY(-50px); }
+}
+
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 20px;
+}
+
+/* Header del juego */
+.game-header {
+    text-align: center;
+    margin-bottom: 20px;
+    background: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(10px);
+    border-radius: 20px;
+    padding: 20px;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+}
+
+.game-header h1 {
+    color: #fff;
+    font-size: 2.5em;
+    margin-bottom: 15px;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+    animation: glow 2s infinite alternate;
+}
+
+@keyframes glow {
+    from { text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3), 0 0 10px rgba(255, 255, 255, 0.3); }
+    to { text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3), 0 0 20px rgba(255, 255, 255, 0.6); }
+}
+
+.stats {
+    display: flex;
+    justify-content: center;
+    gap: 30px;
+    flex-wrap: wrap;
+}
+
+.stats > div {
+    background: rgba(255, 255, 255, 0.2);
+    padding: 10px 20px;
+    border-radius: 25px;
+    color: #fff;
+    font-weight: bold;
+    font-size: 1.1em;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s ease;
+}
+
+.stats > div:hover {
+    transform: translateY(-2px);
+}
+
+/* Controles del juego */
+.game-controls {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.start-btn, .pause-btn, .restart-btn, .play-again-btn {
+    background: linear-gradient(45deg, #ff6b6b, #ff8e53);
+    color: white;
+    border: none;
+    padding: 15px 30px;
+    font-size: 1.2em;
+    font-weight: bold;
+    border-radius: 50px;
+    cursor: pointer;
+    margin: 0 10px;
+    transition: all 0.3s ease;
+    box-shadow: 0 6px 20px rgba(255, 107, 107, 0.4);
+    text-transform: uppercase;
+}
+
+.start-btn:hover, .pause-btn:hover, .restart-btn:hover, .play-again-btn:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 8px 25px rgba(255, 107, 107, 0.6);
+}
+
+.start-btn:active, .pause-btn:active, .restart-btn:active, .play-again-btn:active {
+    transform: translateY(-1px);
+}
+
+/* Área del juego */
+.game-area {
+    width: 100%;
+    height: 500px;
+    background: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(10px);
+    border-radius: 20px;
+    position: relative;
+    overflow: hidden;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+    border: 2px solid rgba(255, 255, 255, 0.2);
+}
+
+.game-message {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    color: #fff;
+    font-size: 1.5em;
+    text-align: center;
+    background: rgba(0, 0, 0, 0.5);
+    padding: 20px 40px;
+    border-radius: 15px;
+    backdrop-filter: blur(10px);
+}
+
+/* Monstruo */
+.monster {
+    position: absolute;
+    width: 80px;
+    height: 80px;
+    font-size: 60px;
+    cursor: pointer;
+    user-select: none;
+    animation: monsterAppear 0.3s ease-out;
+    transition: transform 0.1s ease;
+    z-index: 10;
+    filter: drop-shadow(0 4px 8px rgba(0, 0, 0, 0.3));
+}
+
+.monster:hover {
+    transform: scale(1.1);
+}
+
+.monster:active {
+    transform: scale(0.9);
+}
+
+@keyframes monsterAppear {
+    0% {
+        transform: scale(0) rotate(180deg);
+        opacity: 0;
+    }
+    50% {
+        transform: scale(1.2) rotate(90deg);
+        opacity: 0.8;
+    }
+    100% {
+        transform: scale(1) rotate(0deg);
+        opacity: 1;
+    }
+}
+
+@keyframes monsterDisappear {
+    0% {
+        transform: scale(1) rotate(0deg);
+        opacity: 1;
+    }
+    100% {
+        transform: scale(0) rotate(-180deg);
+        opacity: 0;
+    }
+}
+
+.monster.disappearing {
+    animation: monsterDisappear 0.3s ease-in forwards;
+}
+
+/* Efecto al hacer clic en el monstruo */
+.monster.clicked {
+    animation: monsterClicked 0.3s ease-out forwards;
+}
+
+@keyframes monsterClicked {
+    0% {
+        transform: scale(1);
+        opacity: 1;
+    }
+    50% {
+        transform: scale(1.5) rotate(360deg);
+        opacity: 0.8;
+    }
+    100% {
+        transform: scale(0) rotate(720deg);
+        opacity: 0;
+    }
+}
+
+/* Efecto de puntos */
+.score-popup {
+    position: absolute;
+    color: #ffeb3b;
+    font-weight: bold;
+    font-size: 2em;
+    pointer-events: none;
+    z-index: 20;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.8);
+    animation: scoreFloat 1s ease-out forwards;
+}
+
+@keyframes scoreFloat {
+    0% {
+        opacity: 1;
+        transform: translateY(0) scale(0.5);
+    }
+    50% {
+        opacity: 1;
+        transform: translateY(-30px) scale(1.2);
+    }
+    100% {
+        opacity: 0;
+        transform: translateY(-60px) scale(0.8);
+    }
+}
+
+/* Modal de Game Over */
+.game-over-modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.8);
+    backdrop-filter: blur(10px);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+}
+
+.modal-content {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    padding: 40px;
+    border-radius: 20px;
+    text-align: center;
+    color: white;
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
+    animation: modalAppear 0.5s ease-out;
+    border: 2px solid rgba(255, 255, 255, 0.3);
+}
+
+@keyframes modalAppear {
+    0% {
+        opacity: 0;
+        transform: scale(0.8) translateY(50px);
+    }
+    100% {
+        opacity: 1;
+        transform: scale(1) translateY(0);
+    }
+}
+
+.modal-content h2 {
+    font-size: 2.5em;
+    margin-bottom: 20px;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+}
+
+.modal-content p {
+    font-size: 1.3em;
+    margin-bottom: 15px;
+    opacity: 0.9;
+}
+
+/* Instrucciones */
+.instructions {
+    margin-top: 30px;
+    background: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(10px);
+    border-radius: 20px;
+    padding: 25px;
+    color: white;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+}
+
+.instructions h3 {
+    text-align: center;
+    margin-bottom: 15px;
+    font-size: 1.5em;
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.3);
+}
+
+.instructions ul {
+    list-style: none;
+    max-width: 600px;
+    margin: 0 auto;
+}
+
+.instructions li {
+    padding: 8px 0;
+    font-size: 1.1em;
+    opacity: 0.9;
+    transition: opacity 0.3s ease;
+}
+
+.instructions li:hover {
+    opacity: 1;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    .game-header h1 {
+        font-size: 2em;
+    }
+    
+    .stats {
+        gap: 15px;
+    }
+    
+    .stats > div {
+        font-size: 1em;
+        padding: 8px 15px;
+    }
+    
+    .game-area {
+        height: 400px;
+    }
+    
+    .monster {
+        width: 60px;
+        height: 60px;
+        font-size: 45px;
+    }
+    
+    .start-btn, .pause-btn, .restart-btn, .play-again-btn {
+        font-size: 1em;
+        padding: 12px 25px;
+    }
+    
+    .instructions li {
+        font-size: 1em;
+    }
+}
+
+@media (max-width: 480px) {
+    .container {
+        padding: 10px;
+    }
+    
+    .game-header h1 {
+        font-size: 1.8em;
+    }
+    
+    .stats {
+        flex-direction: column;
+        align-items: center;
+        gap: 10px;
+    }
+    
+    .game-area {
+        height: 350px;
+    }
+    
+    .monster {
+        width: 50px;
+        height: 50px;
+        font-size: 35px;
+    }
+}

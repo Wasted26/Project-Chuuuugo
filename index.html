@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Aplasta al Monstruo</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <header class="game-header">
+            <h1>🎯 Aplasta al Monstruo 🎯</h1>
+            <div class="stats">
+                <div class="score">
+                    <span>Puntos: </span>
+                    <span id="score">0</span>
+                </div>
+                <div class="lives">
+                    <span>Vidas: </span>
+                    <span id="lives">3</span>
+                </div>
+                <div class="time">
+                    <span>Tiempo: </span>
+                    <span id="time">0</span>s
+                </div>
+            </div>
+        </header>
+
+        <div class="game-controls">
+            <button id="startBtn" class="start-btn">🎮 Iniciar Juego</button>
+            <button id="pauseBtn" class="pause-btn" style="display: none;">⏸️ Pausar</button>
+            <button id="restartBtn" class="restart-btn" style="display: none;">🔄 Reiniciar</button>
+        </div>
+
+        <div id="gameArea" class="game-area">
+            <div id="gameMessage" class="game-message">
+                ¡Haz clic en "Iniciar Juego" para comenzar!
+            </div>
+        </div>
+
+        <div id="gameOverModal" class="game-over-modal" style="display: none;">
+            <div class="modal-content">
+                <h2>🎮 Game Over 🎮</h2>
+                <p id="finalScore">Puntuación Final: 0</p>
+                <p id="finalTime">Tiempo Total: 0s</p>
+                <button id="playAgainBtn" class="play-again-btn">🔄 Jugar de Nuevo</button>
+            </div>
+        </div>
+
+        <div class="instructions">
+            <h3>📋 Instrucciones:</h3>
+            <ul>
+                <li>🎯 Haz clic en los monstruos antes de que desaparezcan</li>
+                <li>🏆 Cada monstruo capturado suma 10 puntos</li>
+                <li>💔 Si un monstruo escapa, pierdes 1 vida</li>
+                <li>🎲 Los monstruos aparecen más rápido a medida que avanzas</li>
+                <li>🏁 El juego termina cuando se acaban las vidas</li>
+            </ul>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
